@@ -158,6 +158,13 @@ public class StartupApplication : IStartupApplication
         services.AddScoped<StoreMessageTemplateDataScope>();
         services.AddScoped<IAdminDataScope<MessageTemplate>, RoutedMessageTemplateDataScope>();
 
+        // IAdminDataScope<Customer>: two bespoke implementations, neither reusing
+        // GlobalAdminDataScope<T>/StoreAdminDataScope<T> — see AdminCustomerDataScope/
+        // StoreCustomerDataScope doc comments. No Vendor scope: Customer has no Vendor screen.
+        services.AddScoped<AdminCustomerDataScope>();
+        services.AddScoped<StoreCustomerDataScope>();
+        services.AddScoped<IAdminDataScope<Customer>, RoutedCustomerDataScope>();
+
         // IAdminDataScope<EmailAccount>: registered once here for the same reason as
         // Category/Collection/GiftVoucher/MessageTemplate above — see
         // RoutedEmailAccountDataScope's doc comment. No Vendor scope: EmailAccount has no
